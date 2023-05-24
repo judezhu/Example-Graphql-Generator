@@ -15,8 +15,8 @@ export default async function (req, res) {
     return;
   }
 
-  const animal = req.body.animal || '';
-  if (animal.trim().length === 0) {
+  const question = req.body.question || '';
+  if (question.trim().length === 0) {
     res.status(400).json({
       error: {
         message: "Please enter a valid question",
@@ -26,18 +26,35 @@ export default async function (req, res) {
   }
 
   try {
-    const completion = await openai.createCompletion({
-      model: "text-davinci-002",
-      prompt: generatePrompt(),
-      temperature: 0,
-      max_tokens: 2000,
-    //   top_p:1,
-    // frequency_penalty:0,
-    // presence_penalty:0,
-    stop:["{}"],
+    let prompt = generatePrompt();
+    console.log(question)
+    console.log(prompt)
+    const completion = await openai.createChatCompletion({
+      model: 'gpt-3.5-turbo',
+      messages: [
+        {
+          role: 'system',
+          content: prompt
+        },
+        {
+          role: 'user',
+          content: question
+        }
+      ],
+      temperature:1,
+      top_p:1,
+      frequency_penalty:0,
+      presence_penalty:0,
     });
+    
+    let message = completion.data.choices[0].message.content
     console.log(completion.data)
-    res.status(200).json({ result: completion.data.choices[0].text });
+    console.log(message)
+    var code = message.substring(
+      message.indexOf("```") + 1, 
+      message.lastIndexOf("```")
+  );
+    res.status(200).json({ result: code });
   } catch (error) {
     // Consider adjusting the error handling logic for your use case
     if (error.response) {
@@ -58,15 +75,14 @@ function generatePrompt() {
   const fs = require('fs');
 
   try {
-    const data = fs.readFileSync('./schema.graphql', 'utf8');
     const schema_definition = fs.readFileSync('./schema.graphql', 'utf8');
-    return `you are a backend engineer with expertise in graphgl, help me write a graphql request of
-    ###
-    how many moments do andrés iniesta have
-    ###
-    based on the graphql schema below. Please don't include fragement in the returning response:
+    return `You are a backend engineer with expertise in graphgl, 
+    You collect the user's question,
+    and then write the entire graphql request based on the schema listed below. 
+    
+    The graphql schema is:
+
     ${schema_definition}
-    {}
 `;
   } catch (err) {
     console.error(err);
