@@ -159,17 +159,6 @@ input GolazosSetFilter {
 	exists: Boolean
 }
 
-input FloatFilter {
-    eq: Float
-    ne: Float
-    gt: Float
-    lt: Float
-    gte: Float
-    lte: Float
-    in: [Float!]
-    exists: Boolean
-}
-
 input BooleanFilter {
     eq: Boolean
     ne: Boolean
@@ -182,16 +171,6 @@ input StringFilter {
     in: [String!]
     ignore_case: Boolean
     exists: Boolean
-}
-
-enum ContainsType {
-    ALL
-    ANY
-}
-
-enum TypeFilterType {
-    INCLUDE
-    EXCLUDE
 }
 
 input Value {
@@ -223,14 +202,6 @@ input IntFilter {
     exists: Boolean
 }
 
-input IntListFilter {
-    contains: [Int!]
-    contains_type: ContainsType
-    exists: Boolean
-}
-
-scalar UInt64
-
 input UInt64Filter {
     eq: UInt64
     ne: UInt64
@@ -243,53 +214,9 @@ input UInt64Filter {
     exists: Boolean
 }
 
-scalar Word
-
-input WordFilter {
-    eq: Word
-    ne: Word
-    gt: Word
-    lt: Word
-    gte: Word
-    lte: Word
-    in: [Word!]
-    notIn: [Word!]
-    exists: Boolean
-}
-
-
-scalar Short
-scalar Byte
 scalar Time
-scalar PriceScalar
-
-
-type Price {
-    value: PriceScalar
-    currency: Currency
-}
-
-enum Currency {
-    USD
-}
 
 input TimeRange {
     timeRangeStart: Time
     timeRangeEnd: Time
-}
-
-type Media {
-    type: MediaType
-    url: String
-    mimeType: MediaMimeType
-}
-
-enum MediaType {
-    BACKGROUND_HERO
-    THUMBNAIL
-    LOGO
-}
-
-enum MediaMimeType {
-    IMAGE_PNG
 }
