@@ -28,9 +28,13 @@ export default async function (req, res) {
   try {
     const completion = await openai.createCompletion({
       model: "text-davinci-002",
-      prompt: generatePrompt(animal),
+      prompt: generatePrompt(),
       temperature: 0,
-      max_tokens: 200
+      max_tokens: 2000,
+    //   top_p:1,
+    // frequency_penalty:0,
+    // presence_penalty:0,
+    stop:["{}"],
     });
     console.log(completion.data)
     res.status(200).json({ result: completion.data.choices[0].text });
@@ -50,14 +54,19 @@ export default async function (req, res) {
   }
 }
 
-function generatePrompt(animal) {
+function generatePrompt() {
   const fs = require('fs');
 
   try {
-    const data = fs.readFileSync('./schema.txt', 'utf8');
-    const schema_definition = fs.readFileSync('./schema.txt', 'utf8');
-    return `Suggest an example graphql request of searchGolazosNft based on the schema.
-Schema: ${schema_definition}
+    const data = fs.readFileSync('./schema.graphql', 'utf8');
+    const schema_definition = fs.readFileSync('./schema.graphql', 'utf8');
+    return `you are a backend engineer with expertise in graphgl, help me write a graphql request of
+    ###
+    how many moments do andrés iniesta have
+    ###
+    based on the graphql schema below. Please don't include fragement in the returning response:
+    ${schema_definition}
+    {}
 `;
   } catch (err) {
     console.error(err);

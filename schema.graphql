@@ -124,7 +124,6 @@ input GolazosPlayMetadataFilter {
 	player_data_id: StringFilter
 	player_first_name: StringFilter
 	player_jersey_name: StringFilter
-	player_known_name: StringFilter
 	player_last_name: StringFilter
 	player_number: IntFilter
 	player_position: StringFilter
