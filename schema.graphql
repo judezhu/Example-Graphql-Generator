@@ -1,26 +1,47 @@
 type GolazosNftEdge {
 	node: GolazosNft
-	cursor: String
 }
 	
+"""
+Entry point for the data that can be fetched.
+"""
 type Query {
+    """
+    Fetches a list of GolazosNfts based on the specified search input.
+    """
     searchGolazosNft(searchInput: SearchGolazosNftsInput): SearchGolazosNftsResponse
 }
 
+"""
+`SearchGolazosNftsInput` represents the parameters available for filtering the search query.
+"""
 input SearchGolazosNftsInput {
-    after: String
+    "Number of edges to be returned."
     first: Int
+
+    "List of filters to apply to the search."
     filters: [GolazosNftFilter!]
 }
 
-
+"""
+`SearchGolazosNftsResponse` represents the response of the search query.
+"""
 type SearchGolazosNftsResponse {
+
+    "List of GolazosNft edges."
     edges: [GolazosNftEdge!]
-    pageInfo: PageInfo
+
+    "Total number of GolazosNfts found."
     totalCount: Int
 }
+
+"""
+`GolazosNft` represents the NFT object with various properties.
+"""
 type GolazosNft {
+    "Edition of the NFT. An Edition is created with a combination of a Series, Set, and Play"
 	edition: GolazosEdition
+
 	id: UInt64
 	owner_address: String
 	serial_number: UInt64
@@ -29,10 +50,7 @@ type GolazosNft {
 
 input GolazosNftFilter {
 	edition: GolazosEditionFilter
-	id: UInt64Filter
-	owner_address: StringFilter
-	serial_number: UInt64Filter
-	type_name: StringFilter
+    serial_number: UInt64Filter
 	exists: Boolean
 }
 
@@ -42,10 +60,11 @@ type GolazosEdition {
 	play: GolazosPlay
 	series: GolazosSeries
 	set: GolazosSet
+
+    "Tier of the NFT. for example: COMMON, RARE, LEGENDARY"
 	tier: String
 	total_burned: UInt64
 	total_minted: UInt64
-	type_name: String
 } 
 input GolazosEditionFilter {
 	id: UInt64Filter
@@ -54,7 +73,6 @@ input GolazosEditionFilter {
 	series: GolazosSeriesFilter
 	set: GolazosSetFilter
 	tier: StringFilter
-	type_name: StringFilter
 	exists: Boolean
 }
 
@@ -62,13 +80,10 @@ type GolazosPlay {
 	classification: String
 	id: UInt64
 	metadata: GolazosPlayMetadata
-	type_name: String
 } 
 input GolazosPlayFilter {
 	classification: StringFilter
-	id: UInt64Filter
 	metadata: GolazosPlayMetadataFilter
-	type_name: StringFilter
 	exists: Boolean
 }
 
@@ -249,11 +264,6 @@ scalar Byte
 scalar Time
 scalar PriceScalar
 
-
-type PageInfo {
-    endCursor: String
-    hasNextPage: Boolean
-}
 
 type Price {
     value: PriceScalar
