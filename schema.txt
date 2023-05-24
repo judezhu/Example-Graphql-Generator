@@ -1,0 +1,640 @@
+type GolazosNftEdge {
+	node: GolazosNft
+	cursor: String
+}
+
+	
+type Query {
+    searchGolazosNft(searchInput: SearchGolazosNftsInput): SearchGolazosNftsResponse
+}
+
+input SearchGolazosNftsInput {
+    after: String
+    first: Int
+    filters: [GolazosNftFilter!]
+    sortBy: GolazosNftSort
+    query: String
+}
+
+
+type SearchGolazosNftsResponse {
+    edges: [GolazosNftEdge!]
+    pageInfo: PageInfo
+    totalCount: Int
+}
+type GolazosNft {
+	burned_at: BlockInfo
+	created_at: BlockInfo
+	edition: GolazosEdition
+	id: UInt64
+	listing: Listing
+	owner_address: String
+	owner_updated_at: BlockInfo
+	serial_number: UInt64
+	type_name: String
+	updated_at: BlockInfo
+	user: UserDetails
+}
+input GolazosNftFilter {
+	burned_at: BlockInfoFilter
+	created_at: BlockInfoFilter
+	edition: GolazosEditionFilter
+	id: UInt64Filter
+	listing: ListingFilter
+	owner_address: StringFilter
+	owner_updated_at: BlockInfoFilter
+	serial_number: UInt64Filter
+	type_name: StringFilter
+	updated_at: BlockInfoFilter
+	exists: Boolean
+}
+input GolazosNftSort {
+	burned_at: BlockInfoSort
+	created_at: BlockInfoSort
+	edition: GolazosEditionSort
+	id: Sort
+	listing: ListingSort
+	owner_address: SortString
+	owner_updated_at: BlockInfoSort
+	serial_number: Sort
+	type_name: SortString
+	updated_at: BlockInfoSort
+}
+type GolazosEdition {
+	closed: BlockInfo
+	created_at: BlockInfo
+	id: UInt64
+	max_mintings: UInt64
+	play: GolazosPlay
+	series: GolazosSeries
+	set: GolazosSet
+	tier: String
+	total_burned: UInt64
+	total_minted: UInt64
+	type_name: String
+	updated_at: BlockInfo
+} 
+input GolazosEditionFilter {
+	closed: BlockInfoFilter
+	created_at: BlockInfoFilter
+	id: UInt64Filter
+	max_mintings: UInt64Filter
+	play: GolazosPlayFilter
+	series: GolazosSeriesFilter
+	set: GolazosSetFilter
+	tier: StringFilter
+	type_name: StringFilter
+	updated_at: BlockInfoFilter
+	exists: Boolean
+}
+input GolazosEditionSort {
+	closed: BlockInfoSort
+	created_at: BlockInfoSort
+	id: Sort
+	max_mintings: Sort
+	play: GolazosPlaySort
+	series: GolazosSeriesSort
+	set: GolazosSetSort
+	tier: SortString
+	type_name: SortString
+	updated_at: BlockInfoSort
+}
+type GolazosPlay {
+	classification: String
+	created_at: BlockInfo
+	id: UInt64
+	metadata: GolazosPlayMetadata
+	type_name: String
+	updated_at: BlockInfo
+} 
+input GolazosPlayFilter {
+	classification: StringFilter
+	created_at: BlockInfoFilter
+	id: UInt64Filter
+	metadata: GolazosPlayMetadataFilter
+	type_name: StringFilter
+	updated_at: BlockInfoFilter
+	exists: Boolean
+}
+input GolazosPlaySort {
+	classification: SortString
+	created_at: BlockInfoSort
+	id: Sort
+	metadata: GolazosPlayMetadataSort
+	type_name: SortString
+	updated_at: BlockInfoSort
+}
+type GolazosPlayMetadata {
+	match_away_score: String
+	match_away_team: String
+	match_date: Time
+	match_day: String
+	match_highlighted_team: String
+	match_home_score: String
+	match_home_team: String
+	match_season: String
+	play_data_id: String
+	player_country: String
+	player_data_id: String
+	player_first_name: String
+	player_jersey_name: String
+	player_known_name: String
+	player_last_name: String
+	player_number: Int
+	player_position: String
+	play_half: Int
+	play_time: String
+	play_type: String
+} 
+
+input GolazosPlayMetadataFilter {
+	match_away_score: StringFilter
+	match_away_team: StringFilter
+	match_date: TimeFilter
+	match_day: StringFilter
+	match_highlighted_team: StringFilter
+	match_home_score: StringFilter
+	match_home_team: StringFilter
+	match_season: StringFilter
+	play_data_id: StringFilter
+	player_country: StringFilter
+	player_data_id: StringFilter
+	player_first_name: StringFilter
+	player_jersey_name: StringFilter
+	player_known_name: StringFilter
+	player_last_name: StringFilter
+	player_number: IntFilter
+	player_position: StringFilter
+	play_half: IntFilter
+	play_time: StringFilter
+	play_type: StringFilter
+	exists: Boolean
+}
+input GolazosPlayMetadataSort {
+	match_away_score: SortString
+	match_away_team: SortString
+	match_date: Sort
+	match_day: SortString
+	match_highlighted_team: SortString
+	match_home_score: SortString
+	match_home_team: SortString
+	match_season: SortString
+	play_data_id: SortString
+	player_country: SortString
+	player_data_id: SortString
+	player_first_name: SortString
+	player_jersey_name: SortString
+	player_known_name: SortString
+	player_last_name: SortString
+	player_number: Sort
+	player_position: SortString
+	play_half: Sort
+	play_time: SortString
+	play_type: SortString
+}
+type GolazosSeries {
+	active: Boolean
+	created_at: BlockInfo
+	id: UInt64
+	name: String
+	type_name: String
+	updated_at: BlockInfo
+} 
+input GolazosSeriesFilter {
+	active: BooleanFilter
+	created_at: BlockInfoFilter
+	id: UInt64Filter
+	name: StringFilter
+	type_name: StringFilter
+	updated_at: BlockInfoFilter
+	exists: Boolean
+}
+input GolazosSeriesSort {
+	active: Sort
+	created_at: BlockInfoSort
+	id: Sort
+	name: SortString
+	type_name: SortString
+	updated_at: BlockInfoSort
+}
+type GolazosSet {
+	created_at: BlockInfo
+	id: UInt64
+	name: String
+	type_name: String
+	updated_at: BlockInfo
+} 
+input GolazosSetFilter {
+	created_at: BlockInfoFilter
+	id: UInt64Filter
+	name: StringFilter
+	type_name: StringFilter
+	updated_at: BlockInfoFilter
+	exists: Boolean
+}
+input GolazosSetSort {
+	created_at: BlockInfoSort
+	id: Sort
+	name: SortString
+	type_name: SortString
+	updated_at: BlockInfoSort
+}
+input FloatFilter {
+    eq: Float
+    ne: Float
+    gt: Float
+    lt: Float
+    gte: Float
+    lte: Float
+    in: [Float!]
+    exists: Boolean
+}
+
+input BooleanFilter {
+    eq: Boolean
+    ne: Boolean
+    exists: Boolean
+}
+
+input StringFilter {
+    eq: String
+    ne: String
+    in: [String!]
+    ignore_case: Boolean
+    exists: Boolean
+}
+
+enum ContainsType {
+    ALL
+    ANY
+}
+
+input FloatListFilter {
+    contains: [Float!]
+    contains_type: ContainsType
+    exists: Boolean
+}
+
+input TimeListFilter {
+    contains: [Time!]
+    contains_type: ContainsType
+    exists: Boolean
+}
+
+input StringListFilter {
+    contains: [String!]
+    contains_type: ContainsType
+    exists: Boolean
+}
+
+input PriceFilter {
+    currency: StringFilter
+    amount: UInt64Filter
+    exists: Boolean
+}
+
+enum TypeFilterType {
+    INCLUDE
+    EXCLUDE
+}
+
+input Value {
+    string_value: String
+    int_value: Int
+    uint_value: UInt
+    UInt64_value: UInt64
+    time: Time
+}
+
+input TimeFilter {
+    eq: Time
+    ne: Time
+    in: [Time!]
+    before: Time
+    after: Time
+    exists: Boolean
+}
+
+scalar Int8
+
+input Int8Filter {
+    eq: Int8
+    ne: Int8
+    gt: Int8
+    lt: Int8
+    gte: Int8
+    lte: Int8
+    in: [Int8!]
+    notIn: [Int8!]
+    exists: Boolean
+}
+
+input Int8ListFilter {
+    contains: [Int8!]
+    contains_type: ContainsType
+    exists: Boolean
+}
+
+scalar Int16
+
+input Int16Filter {
+    eq: Int16
+    ne: Int16
+    gt: Int16
+    lt: Int16
+    gte: Int16
+    lte: Int16
+    in: [Int16!]
+    notIn: [Int16!]
+    exists: Boolean
+}
+
+input Int16ListFilter {
+    contains: [Int16!]
+    contains_type: ContainsType
+    exists: Boolean
+}
+
+
+input IntFilter {
+    eq: Int
+    ne: Int
+    gt: Int
+    lt: Int
+    gte: Int
+    lte: Int
+    in: [Int!]
+    notIn: [Int!]
+    exists: Boolean
+}
+
+input IntListFilter {
+    contains: [Int!]
+    contains_type: ContainsType
+    exists: Boolean
+}
+
+scalar Int64
+
+input Int64Filter {
+    eq: Int64
+    ne: Int64
+    gt: Int64
+    lt: Int64
+    gte: Int64
+    lte: Int64
+    in: [Int64!]
+    notIn: [Int64!]
+    exists: Boolean
+}
+
+input Int64ListFilter {
+    contains: [Int64!]
+    contains_type: ContainsType
+    exists: Boolean
+}
+
+
+scalar UInt8
+
+input UInt8Filter {
+    eq: UInt8
+    ne: UInt8
+    gt: UInt8
+    lt: UInt8
+    gte: UInt8
+    lte: UInt8
+    in: [UInt8!]
+    notIn: [UInt8!]
+    exists: Boolean
+}
+
+input UInt8ListFilter {
+    contains: [UInt8!]
+    contains_type: ContainsType
+    exists: Boolean
+}
+
+scalar UInt16
+
+input UInt16Filter {
+    eq: UInt16
+    ne: UInt16
+    gt: UInt16
+    lt: UInt16
+    gte: UInt16
+    lte: UInt16
+    in: [UInt16!]
+    notIn: [UInt16!]
+    exists: Boolean
+}
+
+input UInt16ListFilter {
+    contains: [UInt16!]
+    contains_type: ContainsType
+    exists: Boolean
+}
+
+scalar UInt
+
+input UIntFilter {
+    eq: UInt
+    ne: UInt
+    gt: UInt
+    lt: UInt
+    gte: UInt
+    lte: UInt
+    in: [UInt!]
+    notIn: [UInt!]
+    exists: Boolean
+}
+
+input UIntListFilter {
+    contains: [UInt!]
+    contains_type: ContainsType
+    exists: Boolean
+}
+
+scalar UInt64
+
+input UInt64Filter {
+    eq: UInt64
+    ne: UInt64
+    gt: UInt64
+    lt: UInt64
+    gte: UInt64
+    lte: UInt64
+    in: [UInt64!]
+    notIn: [UInt64!]
+    exists: Boolean
+}
+
+input UInt64ListFilter {
+    contains: [UInt64!]
+    contains_type: ContainsType
+    exists: Boolean
+}
+
+scalar Word8
+
+input Word8Filter {
+    eq: Word8
+    ne: Word8
+    gt: Word8
+    lt: Word8
+    gte: Word8
+    lte: Word8
+    in: [Word8!]
+    notIn: [Word8!]
+    exists: Boolean
+}
+
+input Word8ListFilter {
+    contains: [Word8!]
+    contains_type: ContainsType
+    exists: Boolean
+}
+
+scalar Word16
+
+input Word16Filter {
+    eq: Word16
+    ne: Word16
+    gt: Word16
+    lt: Word16
+    gte: Word16
+    lte: Word16
+    in: [Word16!]
+    notIn: [Word16!]
+    exists: Boolean
+}
+
+input Word16ListFilter {
+    contains: [Word16!]
+    contains_type: ContainsType
+    exists: Boolean
+}
+
+scalar Word
+
+input WordFilter {
+    eq: Word
+    ne: Word
+    gt: Word
+    lt: Word
+    gte: Word
+    lte: Word
+    in: [Word!]
+    notIn: [Word!]
+    exists: Boolean
+}
+
+input WordListFilter {
+    contains: [Word!]
+    contains_type: ContainsType
+    exists: Boolean
+}
+
+scalar Word64
+
+input Word64Filter {
+    eq: Word64
+    ne: Word64
+    gt: Word64
+    lt: Word64
+    gte: Word64
+    lte: Word64
+    in: [Word64!]
+    notIn: [Word64!]
+    exists: Boolean
+}
+
+input Word64ListFilter {
+    contains: [Word64!]
+    contains_type: ContainsType
+    exists: Boolean
+}
+
+scalar Short
+scalar Byte
+scalar Time
+scalar PriceScalar
+enum SortDirection {
+    ASC
+    DESC
+}
+
+enum SortMissing {
+    FIRST
+    LAST
+}
+
+input Sort {
+    priority: Int!
+    direction: SortDirection!
+    missing: SortMissing
+}
+
+input SortString {
+    priority: Int!
+    direction: SortDirection!
+    ignore_case: Boolean
+    missing: SortMissing
+}
+
+input SortKey {
+    key: Sort!
+}
+
+input SortStringKey {
+    key: SortString!
+}
+
+enum Comparator {
+    EQ
+    NE
+    LT
+    LE
+    GT
+    GE
+}
+
+type PageInfo {
+    endCursor: String
+    hasNextPage: Boolean
+}
+
+type Price {
+    value: PriceScalar
+    currency: Currency
+}
+
+input PriceInput {
+    value: PriceScalar
+    currency: Currency
+}
+
+enum Currency {
+    USD
+}
+
+input TimeRange {
+    timeRangeStart: Time
+    timeRangeEnd: Time
+}
+
+type Media {
+    type: MediaType
+    url: String
+    mimeType: MediaMimeType
+}
+
+enum MediaType {
+    BACKGROUND_HERO
+    THUMBNAIL
+    LOGO
+}
+
+enum MediaMimeType {
+    IMAGE_PNG
+}
