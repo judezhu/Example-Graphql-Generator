@@ -1,0 +1,286 @@
+type GolazosNftEdge {
+	node: GolazosNft
+	cursor: String
+}
+	
+type Query {
+    searchGolazosNft(searchInput: SearchGolazosNftsInput): SearchGolazosNftsResponse
+}
+
+input SearchGolazosNftsInput {
+    after: String
+    first: Int
+    filters: [GolazosNftFilter!]
+}
+
+
+type SearchGolazosNftsResponse {
+    edges: [GolazosNftEdge!]
+    pageInfo: PageInfo
+    totalCount: Int
+}
+type GolazosNft {
+	edition: GolazosEdition
+	id: UInt64
+	owner_address: String
+	serial_number: UInt64
+	type_name: String
+}
+
+input GolazosNftFilter {
+	edition: GolazosEditionFilter
+	id: UInt64Filter
+	owner_address: StringFilter
+	serial_number: UInt64Filter
+	type_name: StringFilter
+	exists: Boolean
+}
+
+type GolazosEdition {
+	id: UInt64
+	max_mintings: UInt64
+	play: GolazosPlay
+	series: GolazosSeries
+	set: GolazosSet
+	tier: String
+	total_burned: UInt64
+	total_minted: UInt64
+	type_name: String
+} 
+input GolazosEditionFilter {
+	id: UInt64Filter
+	max_mintings: UInt64Filter
+	play: GolazosPlayFilter
+	series: GolazosSeriesFilter
+	set: GolazosSetFilter
+	tier: StringFilter
+	type_name: StringFilter
+	exists: Boolean
+}
+
+type GolazosPlay {
+	classification: String
+	id: UInt64
+	metadata: GolazosPlayMetadata
+	type_name: String
+} 
+input GolazosPlayFilter {
+	classification: StringFilter
+	id: UInt64Filter
+	metadata: GolazosPlayMetadataFilter
+	type_name: StringFilter
+	exists: Boolean
+}
+
+type GolazosPlayMetadata {
+	match_away_score: String
+	match_away_team: String
+	match_date: Time
+	match_day: String
+	match_highlighted_team: String
+	match_home_score: String
+	match_home_team: String
+	match_season: String
+	play_data_id: String
+	player_country: String
+	player_data_id: String
+	player_first_name: String
+	player_jersey_name: String
+	player_known_name: String
+	player_last_name: String
+	player_number: Int
+	player_position: String
+	play_half: Int
+	play_time: String
+	play_type: String
+} 
+
+input GolazosPlayMetadataFilter {
+	match_away_score: StringFilter
+	match_away_team: StringFilter
+	match_date: TimeFilter
+	match_day: StringFilter
+	match_highlighted_team: StringFilter
+	match_home_score: StringFilter
+	match_home_team: StringFilter
+	match_season: StringFilter
+	play_data_id: StringFilter
+	player_country: StringFilter
+	player_data_id: StringFilter
+	player_first_name: StringFilter
+	player_jersey_name: StringFilter
+	player_known_name: StringFilter
+	player_last_name: StringFilter
+	player_number: IntFilter
+	player_position: StringFilter
+	play_half: IntFilter
+	play_time: StringFilter
+	play_type: StringFilter
+	exists: Boolean
+}
+
+type GolazosSeries {
+	active: Boolean
+	id: UInt64
+	name: String
+	type_name: String
+} 
+input GolazosSeriesFilter {
+	active: BooleanFilter
+	id: UInt64Filter
+	name: StringFilter
+	type_name: StringFilter
+	exists: Boolean
+}
+
+type GolazosSet {
+	id: UInt64
+	name: String
+	type_name: String
+} 
+input GolazosSetFilter {
+	id: UInt64Filter
+	name: StringFilter
+	type_name: StringFilter
+	exists: Boolean
+}
+
+input FloatFilter {
+    eq: Float
+    ne: Float
+    gt: Float
+    lt: Float
+    gte: Float
+    lte: Float
+    in: [Float!]
+    exists: Boolean
+}
+
+input BooleanFilter {
+    eq: Boolean
+    ne: Boolean
+    exists: Boolean
+}
+
+input StringFilter {
+    eq: String
+    ne: String
+    in: [String!]
+    ignore_case: Boolean
+    exists: Boolean
+}
+
+enum ContainsType {
+    ALL
+    ANY
+}
+
+enum TypeFilterType {
+    INCLUDE
+    EXCLUDE
+}
+
+input Value {
+    string_value: String
+    int_value: Int
+    uint_value: UInt
+    UInt64_value: UInt64
+    time: Time
+}
+
+input TimeFilter {
+    eq: Time
+    ne: Time
+    in: [Time!]
+    before: Time
+    after: Time
+    exists: Boolean
+}
+
+input IntFilter {
+    eq: Int
+    ne: Int
+    gt: Int
+    lt: Int
+    gte: Int
+    lte: Int
+    in: [Int!]
+    notIn: [Int!]
+    exists: Boolean
+}
+
+input IntListFilter {
+    contains: [Int!]
+    contains_type: ContainsType
+    exists: Boolean
+}
+
+scalar UInt64
+
+input UInt64Filter {
+    eq: UInt64
+    ne: UInt64
+    gt: UInt64
+    lt: UInt64
+    gte: UInt64
+    lte: UInt64
+    in: [UInt64!]
+    notIn: [UInt64!]
+    exists: Boolean
+}
+
+scalar Word
+
+input WordFilter {
+    eq: Word
+    ne: Word
+    gt: Word
+    lt: Word
+    gte: Word
+    lte: Word
+    in: [Word!]
+    notIn: [Word!]
+    exists: Boolean
+}
+
+
+scalar Short
+scalar Byte
+scalar Time
+scalar PriceScalar
+
+
+type PageInfo {
+    endCursor: String
+    hasNextPage: Boolean
+}
+
+type Price {
+    value: PriceScalar
+    currency: Currency
+}
+
+enum Currency {
+    USD
+}
+
+input TimeRange {
+    timeRangeStart: Time
+    timeRangeEnd: Time
+}
+
+type Media {
+    type: MediaType
+    url: String
+    mimeType: MediaMimeType
+}
+
+enum MediaType {
+    BACKGROUND_HERO
+    THUMBNAIL
+    LOGO
+}
+
+enum MediaMimeType {
+    IMAGE_PNG
+}
