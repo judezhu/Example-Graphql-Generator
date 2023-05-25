@@ -51,6 +51,18 @@ type Query {
     }
   }
 }
+
+Currently,  the players who have NFTs:
+1. Andrés Iniesta
+2. Lionel Messi
+3. Cristiano Ronaldo
+4. Neymar Jr.
+5. Kylian Mbappé
+6. Mohamed Salah
+7. Robert Lewandowski
+8. Harry Kane
+9. Kevin De Bruyne
+10. Luka Modrić
 """
     searchGolazosNft(searchInput: SearchGolazosNftsInput): SearchGolazosNftsResponse
 }
