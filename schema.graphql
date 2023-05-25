@@ -22,9 +22,6 @@ type Query {
           player_last_name: {
             eq: "Iniesta"
           }
-          player_country: {
-            eq: "Spain"
-          }
         }
       }
       }
@@ -52,17 +49,82 @@ type Query {
   }
 }
 
-Currently,  the players who have NFTs:
+For exampe, if a user wants to search for NFTs for more than one player, they can use the following query:
+
+    query {
+    searchGolazosNft(searchInput: {
+    filters: [{
+      edition: {
+        exists: true
+        play: {
+        metadata: {
+          player_first_name: {
+            eq: "Andrés"
+          }
+          player_last_name: {
+            eq: "Iniesta"
+          }
+        }
+      }
+      }
+    },
+    {
+      edition: {
+        exists: true
+        play: {
+        metadata: {
+          player_first_name: {
+            eq: "Lionel"
+          }
+          player_last_name: {
+            eq: "Messi"
+          }
+        }
+      }
+      }
+    }]
+  }) {
+    totalCount
+    edges {
+      node {
+        edition {
+          id
+          set {
+            name
+          }
+          play {
+            metadata{
+              player_first_name
+              player_last_name
+            }
+          }
+          tier
+        }
+      }
+    }
+  }
+}
+
+Currently,  the players who have NFTs are from La liga or used to play in La liga. For exampe:
 1. Andrés Iniesta
 2. Lionel Messi
 3. Cristiano Ronaldo
 4. Neymar Jr.
-5. Kylian Mbappé
-6. Mohamed Salah
-7. Robert Lewandowski
-8. Harry Kane
-9. Kevin De Bruyne
-10. Luka Modrić
+5. Robert Lewandowski
+6. Luka Modrić
+7. Sergio Ramos
+8. Sergio Agüero
+9. Karim Benzema
+10. Eden Hazard
+11. Antoine Griezmann
+12. Luis Suárez
+13. Toni Kroos
+14. Gareth Bale
+15. David Silva
+16. David Villa
+17. Diego Godín
+
+If you want to search for NFTs which are not related to players, please try to find players' name first, and then search for NFTs based on the players' name.
 """
     searchGolazosNft(searchInput: SearchGolazosNftsInput): SearchGolazosNftsResponse
 }
@@ -125,7 +187,7 @@ type GolazosEdition {
 	series: GolazosSeries
 	set: GolazosSet
 
-    "Tier of the NFT. for example: COMMON, RARE, LEGENDARY"
+  "Tier of the NFT. for example: COMMON, RARE, LEGENDARY"
 	tier: String
 	total_burned: UInt64
 	total_minted: UInt64
@@ -166,21 +228,47 @@ type GolazosPlayMetadata {
 	match_away_score: String
 	match_away_team: String
 	match_date: Time
+
+  "match_day example: 18"
 	match_day: String
+
+  "match_highlighted_team example: Valencia CF"
 	match_highlighted_team: String
+
+  "match_home_score example: 4"
 	match_home_score: String
+
+  "match_home_team example: Valencia CF"
 	match_home_team: String
+
+  "match_season example: 2009-2010"
 	match_season: String
-	play_data_id: String
+
+  "player_country example: Argentina"
 	player_country: String
-	player_data_id: String
-	player_first_name: String
+	
+  "player_first_name example: Lionel"
+  player_first_name: String
+
+  "player_jersey_name example: Messi"
 	player_jersey_name: String
+
+  "player_last_name example: Messi"
 	player_last_name: String
+
+  "player_number example: 24"
 	player_number: Int
+
+  "player_position example: Midfielder"
 	player_position: String
+
+  "play_half example: 1"
 	play_half: Int
+
+  "play_time example: 6"
 	play_time: String
+
+ "play_type example: GOAL"
 	play_type: String
 } 
 
