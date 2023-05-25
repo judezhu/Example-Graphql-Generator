@@ -1,14 +1,57 @@
-type GolazosNftEdge {
-	node: GolazosNft
-}
-	
+
 """
 Entry point for the data that can be fetched.
 """
 type Query {
     """
-    Fetches a list of GolazosNfts based on the specified search input.
-    """
+    Fetches a list of Golazos Nfts based on the specified search input. Filter parameters can be used to filter the search results. 
+    Users can search for NFTs based on the player's name, position, country, etc.
+
+    For exampe, if a user wants to search for NFTs of Andrés Iniesta, they can use the following query:
+
+    query {
+    searchGolazosNft(searchInput: {
+    filters: [{
+      edition: {
+        exists: true
+        play: {
+        metadata: {
+          player_first_name: {
+            eq: "Andrés"
+          }
+          player_last_name: {
+            eq: "Iniesta"
+          }
+          player_country: {
+            eq: "Spain"
+          }
+        }
+      }
+      }
+    
+    }]
+  }) {
+    totalCount
+    edges {
+      node {
+        edition {
+          id
+          set {
+            name
+          }
+          play {
+            metadata{
+              player_first_name
+              player_last_name
+            }
+          }
+          tier
+        }
+      }
+    }
+  }
+}
+"""
     searchGolazosNft(searchInput: SearchGolazosNftsInput): SearchGolazosNftsResponse
 }
 
@@ -35,6 +78,11 @@ type SearchGolazosNftsResponse {
     totalCount: Int
 }
 
+type GolazosNftEdge {
+	node: GolazosNft
+}
+	
+
 """
 `GolazosNft` represents the NFT object with various properties.
 """
@@ -45,10 +93,14 @@ type GolazosNft {
 	id: UInt64
 	owner_address: String
 	serial_number: UInt64
-	type_name: String
 }
 
+"""
+`GolazosNftFilter` represents the parameters available for filtering the search query.
+"""
 input GolazosNftFilter {
+
+    "Edition of the NFT. An Edition is created with a combination of a Series, Set, and Play"
 	edition: GolazosEditionFilter
     serial_number: UInt64Filter
 	exists: Boolean
@@ -66,6 +118,10 @@ type GolazosEdition {
 	total_burned: UInt64
 	total_minted: UInt64
 } 
+
+"""
+`GolazosEditionFilter` represents the parameters available for filtering by edition.
+"""
 input GolazosEditionFilter {
 	id: UInt64Filter
 	max_mintings: UInt64Filter
@@ -81,12 +137,19 @@ type GolazosPlay {
 	id: UInt64
 	metadata: GolazosPlayMetadata
 } 
+
+"""
+`GolazosPlayFilter` represents the parameters available for filtering by play.
+"""
 input GolazosPlayFilter {
 	classification: StringFilter
 	metadata: GolazosPlayMetadataFilter
 	exists: Boolean
 }
 
+"""
+`GolazosPlayMetadata` represents metadata for football players. This metadata is used to display the player's information on the NFT.
+"""
 type GolazosPlayMetadata {
 	match_away_score: String
 	match_away_team: String
@@ -101,7 +164,6 @@ type GolazosPlayMetadata {
 	player_data_id: String
 	player_first_name: String
 	player_jersey_name: String
-	player_known_name: String
 	player_last_name: String
 	player_number: Int
 	player_position: String
@@ -110,6 +172,11 @@ type GolazosPlayMetadata {
 	play_type: String
 } 
 
+"""
+`GolazosPlayMetadataFilter` represents  the parameters available for filtering by play metadata.
+Users can use this metadata to search for NFTs based on the player's information. 
+For example, users can search for NFTs based on the player's name, position, country, etc.
+"""
 input GolazosPlayMetadataFilter {
 	match_away_score: StringFilter
 	match_away_team: StringFilter
@@ -137,25 +204,21 @@ type GolazosSeries {
 	active: Boolean
 	id: UInt64
 	name: String
-	type_name: String
 } 
 input GolazosSeriesFilter {
 	active: BooleanFilter
 	id: UInt64Filter
 	name: StringFilter
-	type_name: StringFilter
 	exists: Boolean
 }
 
 type GolazosSet {
 	id: UInt64
 	name: String
-	type_name: String
 } 
 input GolazosSetFilter {
 	id: UInt64Filter
 	name: StringFilter
-	type_name: StringFilter
 	exists: Boolean
 }
 
